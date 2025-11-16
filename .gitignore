@@ -124,5 +124,9 @@ venv.bak/
 .dmypy.json
 dmypy.json
 
-midterm-project/TODO
+midterm-project/TODO.md
 midterm-project/reports_stats.sql
+midterm-project/midreports_stats.sql
+midterm-project/report_executions.csv
+midterm-project/QUICKSTART.md
+midterm-project/SETUP_PYCHARM.md

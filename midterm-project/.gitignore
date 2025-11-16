@@ -1,0 +1,92 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Jupyter Notebook
+.ipynb_checkpoints
+*/.ipynb_checkpoints/*
+
+# PyCharm
+.idea/
+*.iml
+
+# Virtual Environments
+venv/
+.venv/
+pipenv/
+.pipenv/
+
+# Data files (too large for git)
+*.csv
+*.parquet
+*.h5
+*.hdf5
+
+# Model files (large binary files)
+model.xgb
+*.pkl
+*.pickle
+*.joblib
+*.bin
+*.pt
+*.pth
+
+# Logs
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment variables
+.env
+.env.local
+
+# IDEs
+.vscode/
+*.swp
+*.swo
+*~
+
+# Coverage reports
+htmlcov/
+.coverage
+.coverage.*
+coverage.xml
+*.cover
+
+# pytest
+.pytest_cache/
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# report stats sql query
+midreports_stats.sql
+TODO.md
+report_executions.csv
+QUICKSTART.md
+SETUP_PYCHARM.md
