@@ -2,7 +2,7 @@
 
 ## Problem Description
 
-This project predicts whether a report execution will **fail or succeed** in the PushMetrics platform using machine learning.
+This project predicts whether a report execution will **fail or succeed** in the [PushMetrics](https://pushmetrics.io) platform using machine learning.
 
 ### Business Context
 
