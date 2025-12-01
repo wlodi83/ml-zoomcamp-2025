@@ -4,6 +4,9 @@ import torch.nn as nn
 import torch.optim as optim
 from torch.utils.data import DataLoader
 from torchvision import datasets, transforms
+import os
+from torch.utils.data import Dataset
+from PIL import Image
 
 # ============================================
 # REPRODUCIBILITY SETUP
@@ -25,6 +28,34 @@ print(f"PyTorch version: {torch.__version__}")
 # Device configuration
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 print(f"Using device: {device}")
+
+class HairDataset(Dataset):
+    def __init__(self, data_dir, transform=None):
+        self.data_dir = data_dir
+        self.transform = transform
+        self.image_paths = []
+        self.labels = []
+        self.classes = sorted(os.listdir(data_dir))
+        self.class_to_idx = {cls: i for i, cls in enumerate(self.classes)}
+
+        for label_name in self.classes:
+            label_dir = os.path.join(data_dir, label_name)
+            for img_name in os.listdir(label_dir):
+                self.image_paths.append(os.path.join(label_dir, img_name))
+                self.labels.append(self.class_to_idx[label_name])
+
+    def __len__(self):
+        return len(self.image_paths)
+
+    def __getitem__(self, idx):
+        img_path = self.image_paths[idx]
+        image = Image.open(img_path).convert('RGB')
+        label = self.labels[idx]
+
+        if self.transform:
+            image = self.transform(image)
+
+        return image, label
 
 
 # ============================================
@@ -127,9 +158,19 @@ train_transforms = transforms.Compose([
     )  # ImageNet normalization
 ])
 
+train_dataset = HairDataset(
+    data_dir='data/train',
+    transform=train_transforms
+)
+
+validation_dataset = HairDataset(
+    data_dir='data/test',
+    transform=train_transforms
+)
+
 # Load datasets
-train_dataset = datasets.ImageFolder('data/train', transform=train_transforms)
-validation_dataset = datasets.ImageFolder('data/test', transform=train_transforms)
+#train_dataset = datasets.ImageFolder('data/train', transform=train_transforms)
+#validation_dataset = datasets.ImageFolder('data/test', transform=train_transforms)
 
 print(f"Training samples: {len(train_dataset)}")
 print(f"Validation samples: {len(validation_dataset)}")
@@ -258,7 +299,13 @@ train_transforms_aug = transforms.Compose([
 ])
 
 # Reload training dataset with augmentation
-train_dataset_aug = datasets.ImageFolder('data/train', transform=train_transforms_aug)
+#train_dataset_aug = datasets.ImageFolder('data/train', transform=train_transforms_aug)
+
+train_dataset_aug = HairDataset(
+    data_dir='data/train',
+    transform=train_transforms_aug
+)
+
 train_loader_aug = DataLoader(train_dataset_aug, batch_size=batch_size, shuffle=True)
 
 # Continue training for 10 more epochs
