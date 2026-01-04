@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: trial-conversion-prediction
+  namespace: default
+  labels:
+    app: trial-conversion-prediction
+    version: v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: trial-conversion-prediction
+  template:
+    metadata:
+      labels:
+        app: trial-conversion-prediction
+        version: v1
+    spec:
+      containers:
+      - name: trial-conversion-prediction
+        image: <YOUR_ECR_REPO>/trial-to-paid:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 9696
+          name: http
+          protocol: TCP
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "200m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 9696
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 9696
+          initialDelaySeconds: 10
+          periodSeconds: 5
+          timeoutSeconds: 3
+          failureThreshold: 3
+        env:
+        - name: PORT
+          value: "9696"
+        - name: WORKERS
+          value: "2"
