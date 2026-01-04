@@ -10,7 +10,7 @@ metadata:
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'
     alb.ingress.kubernetes.io/ssl-redirect: "443"
     # Certificate from AWS Certificate Manager (replace with your certificate ARN)
-    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:eu-central-1:133737826969:certificate/1b43fff1-9945-48e7-9718-c11f849fbcd9
+    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:eu-central-1:123456789012:certificate/1b43fff1-9945-48e7-9718-c11f849fbcd9
     # Health check settings
     alb.ingress.kubernetes.io/healthcheck-path: /health
     alb.ingress.kubernetes.io/healthcheck-interval-seconds: "30"
