@@ -1,0 +1,15 @@
+# User Churn Prediction - Production Dependencies
+# ML Zoomcamp Capstone 2 Project
+
+# Core ML libraries
+pandas>=2.0.0
+numpy>=1.24.0
+scikit-learn>=1.3.0
+xgboost==2.1.4
+
+# Web server
+flask>=3.0.0
+gunicorn>=21.0.0
+
+# HTTP client (for testing)
+requests>=2.31.0

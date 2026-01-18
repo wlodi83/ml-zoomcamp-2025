@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user-churn-predictor
+  labels:
+    app: user-churn-predictor
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: user-churn-predictor
+  template:
+    metadata:
+      labels:
+        app: user-churn-predictor
+    spec:
+      containers:
+        - name: user-churn-predictor
+          # Replace YOUR_AWS_ACCOUNT_ID with your actual AWS account ID
+          image: YOUR_AWS_ACCOUNT_ID.dkr.ecr.eu-central-1.amazonaws.com/user-churn-predictor:${IMAGE_TAG}
+          ports:
+            - containerPort: 9696
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "200m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 9696
+            initialDelaySeconds: 10
+            periodSeconds: 30
+            timeoutSeconds: 5
+            failureThreshold: 3
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 9696
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            timeoutSeconds: 3
+            failureThreshold: 3
+          env:
+            - name: HOST
+              value: "0.0.0.0"
+            - name: PORT
+              value: "9696"

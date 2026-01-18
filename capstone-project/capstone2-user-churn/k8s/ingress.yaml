@@ -1,0 +1,35 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: user-churn-predictor
+  namespace: default
+  annotations:
+    # AWS Load Balancer Controller annotations
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'
+    alb.ingress.kubernetes.io/ssl-redirect: "443"
+    # Certificate from AWS Certificate Manager (replace with your certificate ARN)
+    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:eu-central-1:YOUR_AWS_ACCOUNT_ID:certificate/YOUR_CERTIFICATE_ID
+    # Health check settings
+    alb.ingress.kubernetes.io/healthcheck-path: /health
+    alb.ingress.kubernetes.io/healthcheck-interval-seconds: "30"
+    alb.ingress.kubernetes.io/healthcheck-timeout-seconds: "5"
+    alb.ingress.kubernetes.io/success-codes: "200"
+    # Tags for the ALB
+    alb.ingress.kubernetes.io/tags: Environment=production,Project=ml-zoomcamp-capstone2,Service=user-churn-predictor
+  labels:
+    app: user-churn-predictor
+spec:
+  ingressClassName: alb
+  rules:
+  - host: churn.pushmetrics.io
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: user-churn-predictor
+            port:
+              number: 80
