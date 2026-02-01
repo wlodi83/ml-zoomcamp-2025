@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: duration-prediction
+  namespace: default
+  labels:
+    app: duration-prediction
+spec:
+  type: ClusterIP
+  selector:
+    app: duration-prediction
+  ports:
+  - port: 80
+    targetPort: 9696
+    protocol: TCP
+    name: http

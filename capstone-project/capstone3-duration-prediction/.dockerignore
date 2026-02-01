@@ -1,0 +1,48 @@
+# Git
+.git
+.gitignore
+
+# Python
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.Python
+venv
+.venv
+env
+.env
+*.egg-info
+
+# Jupyter
+.ipynb_checkpoints
+*.ipynb
+
+# Data (raw training data not needed in image)
+data.csv
+
+# IDE
+.idea
+.vscode
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Documentation
+*.md
+
+# Test files
+test_*.py
+
+# Kubernetes
+k8s/
+
+# Deployment scripts
+deploy.sh
+
+# Pipenv (use requirements.txt in Docker)
+Pipfile
+Pipfile.lock
